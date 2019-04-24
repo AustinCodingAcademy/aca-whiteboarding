@@ -7,7 +7,7 @@
   <title>Whiteboarding Question Generator</title>
 </head>
 <body>
-  <a href="/">Random</a>
+  <a href="/whiteboarding">Random</a>
   <h1></h1>
   <p></p>
   <small>(pulled from https://codewars.com)</small>
@@ -19,7 +19,7 @@
       fetch(`https://ni7gssdy8d.execute-api.us-west-1.amazonaws.com/latest/?url=https://www.codewars.com/api/v1/code-challenges/${kata}`)
       .then(response => response.json())
       .then(json => {
-        history.replaceState({}, null, `${window.location.origin}?${Qs.stringify({ kata })}`);
+        history.replaceState({}, null, `${window.location.origin}/whiteboarding?${Qs.stringify({ kata })}`);
         document.querySelector('h1').innerText = json.name;
         document.querySelector('p').innerHTML = new showdown.Converter().makeHtml(json.description);
       })
