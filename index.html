@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Whiteboarding Question Generator</title>
+</head>
+<body>
+  <a href="/">Random</a>
+  <h1></h1>
+  <p></p>
+  <small>(pulled from https://codewars.com)</small>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.7.0/qs.min.js"></script>
+  <script>
+    fetch('katas.json').then(res => res.json()).then(katas => {
+      const kata = Qs.parse(window.location.search.slice(1)).kata || katas[Math.floor(Math.random()*katas.length)];
+      fetch(`https://ni7gssdy8d.execute-api.us-west-1.amazonaws.com/latest/?url=https://www.codewars.com/api/v1/code-challenges/${kata}`)
+      .then(response => response.json())
+      .then(json => {
+        history.replaceState({}, null, `${window.location.origin}?${Qs.stringify({ kata })}`);
+        document.querySelector('h1').innerText = json.name;
+        document.querySelector('p').innerHTML = new showdown.Converter().makeHtml(json.description);
+      })
+    })
+  </script>
+</body>
+</html>
